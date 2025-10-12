@@ -1,5 +1,3 @@
-// src/components/Header.tsx
-
 import { usePortfolioStore } from '../store/portfolioStore';
 import { NavLink } from 'react-router-dom';
 

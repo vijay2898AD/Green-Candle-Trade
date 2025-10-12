@@ -1,5 +1,3 @@
-// src/components/StockCardSkeleton.tsx
-
 export const StockCardSkeleton = () => {
   return (
     <div className="bg-gray-800 p-4 rounded-lg shadow-lg animate-pulse">

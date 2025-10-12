@@ -1,5 +1,3 @@
-// src/components/PortfolioChart.tsx
-
 import { useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import type { Transaction } from '../store/portfolioStore'; // Assuming you export this type

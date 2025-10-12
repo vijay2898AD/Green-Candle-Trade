@@ -1,5 +1,3 @@
-// src/pages/Market.tsx
-
 // --- FIX: All necessary imports are here ---
 import { useState, useEffect } from 'react';
 import { getStockQuote } from '../services/fmpApi';
