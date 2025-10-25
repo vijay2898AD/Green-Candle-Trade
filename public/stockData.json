@@ -1,0 +1,10 @@
+[
+  { "symbol": "RELIANCE.NS", "price": 2950.75, "changesPercentage": 1.4, "name": "Reliance Industries Ltd." },
+  { "symbol": "TCS.NS", "price": 4015.20, "changesPercentage": -0.8, "name": "Tata Consultancy Services" },
+  { "symbol": "HDFCBANK.NS", "price": 1450.90, "changesPercentage": 0.5, "name": "HDFC Bank Ltd." },
+  { "symbol": "INFY.NS", "price": 1620.50, "changesPercentage": 2.1, "name": "Infosys Ltd." },
+  { "symbol": "ICICIBANK.NS", "price": 1105.00, "changesPercentage": -1.1, "name": "ICICI Bank Ltd." },
+  { "symbol": "HINDUNILVR.NS", "price": 2380.10, "changesPercentage": 0.2, "name": "Hindustan Unilever Ltd." },
+  { "symbol": "SBIN.NS", "price": 830.60, "changesPercentage": 1.9, "name": "State Bank of India" },
+  { "symbol": "WIPRO.NS", "price": 485.70, "changesPercentage": -0.3, "name": "Wipro Ltd." }
+]

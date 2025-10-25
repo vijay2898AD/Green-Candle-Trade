@@ -1,38 +1,58 @@
 // src/services/fmpApi.ts
 
-import axios from 'axios';
+// --- Mock Stock Data Type ---
+interface MockStock {
+  symbol: string;
+  price: number;
+  changesPercentage: number;
+  name: string;
+}
 
-const API_KEY = import.meta.env.VITE_FMP_API_KEY;
-const BASE_URL = 'https://financialmodelingprep.com/api/v3';
+// --- Cached Data ---
+// We cache the data so we don't fetch the file on every single quote request.
+let allStocksCache: MockStock[] | null = null;
 
+/**
+ * Fetches all stock quotes from the local JSON file.
+ * In a real app, you'd add error handling here.
+ */
+export const getAllStockQuotes = async (): Promise<MockStock[]> => {
+  if (allStocksCache) {
+    return allStocksCache;
+  }
+  
+  try {
+    // This path is relative to the 'public' folder
+    const response = await fetch('/stockData.json'); 
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data: MockStock[] = await response.json();
+    allStocksCache = data; // Cache the result
+    return data;
+  } catch (error) {
+    console.error("Error fetching mock stock data:", error);
+    return [];
+  }
+};
+
+/**
+ * Gets a single stock quote from the already-fetched data.
+ */
 export const getStockQuote = async (symbol: string) => {
   try {
-    const response = await axios.get(`${BASE_URL}/quote/${symbol}`, {
-        params: {
-            apikey: API_KEY
-        }
-    });
+    const allStocks = await getAllStockQuotes();
+    const quote = allStocks.find(stock => stock.symbol === symbol);
 
-    // FMP returns an array, even for a single quote
-    const data = response.data?.[0];
-
-    if (!data || !data.price) {
-      console.warn(`No valid data for ${symbol} from FMP.`);
+    if (!quote) {
+      console.warn(`No mock data for ${symbol}.`);
       return null;
     }
-
-    // Map the FMP response to the format our app expects
-    const formattedQuote = {
-      symbol: data.symbol,
-      price: data.price,
-      changesPercentage: data.changesPercentage,
-      name: data.name,
-    };
-
-    return formattedQuote;
-
+    // Simulate a small delay as if it were a real API
+    await new Promise(resolve => setTimeout(resolve, 50));
+    return quote;
   } catch (error: any) {
-    console.error(`Error fetching quote for ${symbol} from FMP:`, error.message);
+    console.error(`Error fetching quote for ${symbol}:`, error.message);
     return null;
   }
 };

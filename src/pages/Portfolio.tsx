@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { usePortfolioStore } from '../store/portfolioStore';
-import { getStockQuote } from '../services/fmpApi';
+import { getAllStockQuotes, getStockQuote } from '../services/fmpApi';
 import { PortfolioChart } from '../components/PortfolioChart'; // 1. IMPORT THE CHART
 
 interface Quote {
@@ -24,12 +24,18 @@ export const Portfolio = () => {
             try {
                 setLoading(true);
                 const holdingSymbols = holdings.map(h => h.symbol);
-                const quotePromises = holdingSymbols.map(symbol => getStockQuote(symbol));
-                const resolvedQuotes = await Promise.all(quotePromises);
-                const quotesMap = resolvedQuotes.reduce((acc, quote) => {
-                    if (quote) acc[quote.symbol] = quote;
-                    return acc;
-                }, {} as Record<string, Quote>);
+                
+                // 1. Get all quotes from our local JSON
+                const allQuotes = await getAllStockQuotes();
+                
+                // 2. Filter for just the ones we own
+                const quotesMap = allQuotes
+                  .filter(q => holdingSymbols.includes(q.symbol))
+                  .reduce((acc, quote) => {
+                      if (quote) acc[quote.symbol] = quote;
+                      return acc;
+                  }, {} as Record<string, Quote>);
+
                 setQuotes(quotesMap);
             } catch (error) { console.error("Failed to fetch quotes for portfolio:", error); }
             finally { setLoading(false); }
@@ -44,9 +50,14 @@ export const Portfolio = () => {
         if (isNaN(quantity) || quantity <= 0) { alert("Please enter a valid quantity."); return; }
         try {
             setSellingSymbol(symbol);
-            const quote = await getStockQuote(symbol);
-            sellStock(symbol, quantity, quote.price);
-            alert(`Transaction successful: Sold ${quantity} shares of ${symbol}.`);
+            const quote = await getStockQuote(symbol); 
+            if (!quote) {
+              throw new Error("Could not get price to sell.");
+            }
+            
+            // Call the store and get the result
+            const result = sellStock(symbol, quantity, quote.price);
+            alert(result.message);
         } catch (error) { alert("Could not complete the sale. Please try again."); }
         finally { setSellingSymbol(null); }
     };

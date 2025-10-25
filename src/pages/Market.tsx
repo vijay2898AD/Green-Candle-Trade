@@ -1,6 +1,6 @@
 // --- FIX: All necessary imports are here ---
 import { useState, useEffect } from 'react';
-import { getStockQuote } from '../services/fmpApi';
+import { getAllStockQuotes } from '../services/fmpApi';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { TradeModal } from '../components/TradeModal';
 import { StockCardSkeleton } from '../components/StockCardSkeleton';
@@ -14,7 +14,7 @@ interface Stock {
 }
 
 // --- FIX: The list of stocks to fetch ---
-const us_stock_symbols = ["AAPL", "GOOGL", "MSFT", "AMZN", "NVDA", "TSLA", "META", "JPM"];
+const indian_stock_symbols = ["RELIANCE.NS", "TCS.NS", "HDFCBANK.NS", "INFY.NS", "ICICIBANK.NS", "HINDUNILVR.NS", "SBIN.NS", "WIPRO.NS"];
 
 export const Market = () => {
   // --- FIX: All state variables are declared here ---
@@ -31,13 +31,16 @@ export const Market = () => {
       setLoading(true);
       setError(null);
       try {
-        const stockData = await Promise.all(
-          us_stock_symbols.map(symbol => getStockQuote(symbol))
+        // 1. Fetch all stocks from our local JSON
+        const allStockData = await getAllStockQuotes();
+
+        // 2. Filter them based on our symbol list
+        const validStockData = allStockData.filter(stock => 
+          indian_stock_symbols.includes(stock.symbol)
         );
 
-        const validStockData = stockData.filter(stock => stock) as Stock[];
-        if (validStockData.length === 0 && us_stock_symbols.length > 0) {
-            throw new Error("Failed to load any stock data. Please verify your API key is correct and active.");
+        if (validStockData.length === 0 && indian_stock_symbols.length > 0) {
+            throw new Error("Failed to load any stock data from mock source. Is stockData.json in /public?");
         }
         setStocks(validStockData);
 
@@ -63,15 +66,16 @@ export const Market = () => {
   };
 
   const handleConfirmBuy = (symbol: string, quantity: number, price: number) => {
-    buyStock(symbol, quantity, price);
-    alert(`Successfully purchased ${quantity} shares of ${symbol}.`);
+    const result = buyStock(symbol, quantity, price);
+    // Show an alert based on the result from the store
+    alert(result.message);
   };
 
   const renderContent = () => {
      if (loading) {
       return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {us_stock_symbols.map(symbol => <StockCardSkeleton key={symbol} />)}
+          {indian_stock_symbols.map(symbol => <StockCardSkeleton key={symbol} />)}
         </div>
       );
      }
@@ -111,7 +115,7 @@ export const Market = () => {
   return (
     <>
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">Market (US Stocks)</h1>
+        <h1 className="text-2xl font-bold mb-4">Market (NSE Stocks)</h1>
         {renderContent()}
       </div>
       

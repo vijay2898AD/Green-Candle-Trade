@@ -15,14 +15,18 @@ export interface Transaction {
   price: number;
   timestamp: string;
 }
+type TradeResult = {
+  success: boolean;
+  message: string;
+}
 
 interface PortfolioState {
   cash: number;
   holdings: Holding[];
   transactions: Transaction[];
   initialize: (initialCash: number) => void;
-  buyStock: (symbol: string, quantity: number, price: number) => void;
-  sellStock: (symbol: string, quantity: number, price: number) => void;
+  buyStock: (symbol: string, quantity: number, price: number) => TradeResult;
+  sellStock: (symbol: string, quantity: number, price: number) => TradeResult;
 }
 
 // Create the store
@@ -44,8 +48,7 @@ export const usePortfolioStore = create<PortfolioState>()(
       buyStock: (symbol, quantity, price) => {
         const totalCost = quantity * price;
         if (get().cash < totalCost) {
-          alert("Not enough cash!");
-          return;
+          return { success: false, message: "Not enough cash to complete purchase." };
         }
 
         set((state) => {
@@ -69,6 +72,7 @@ export const usePortfolioStore = create<PortfolioState>()(
             transactions: [...state.transactions, { symbol, type: 'BUY', quantity, price, timestamp: new Date().toISOString() }],
           };
         });
+        return { success: true, message: `Successfully purchased ${quantity} shares of ${symbol}.`};
       },
 
       // Action to sell a stock (we'll implement this logic later)
@@ -77,12 +81,10 @@ export const usePortfolioStore = create<PortfolioState>()(
 
         // Validation: Check if user owns the stock and has enough quantity
         if (!existingHolding) {
-          alert("Error: You do not own this stock.");
-          return;
+          return { success: false, message: "Error: You do not own this stock." };
         }
         if (existingHolding.quantity < quantity) {
-          alert(`Error: You only own ${existingHolding.quantity} shares of ${symbol}.`);
-          return;
+          return { success: false, message: `Error: You only own ${existingHolding.quantity} shares of ${symbol}.` };
         }
 
         const totalProceeds = quantity * price;
@@ -106,6 +108,7 @@ export const usePortfolioStore = create<PortfolioState>()(
             transactions: [...state.transactions, { symbol, type: 'SELL', quantity, price, timestamp: new Date().toISOString() }],
           };
         });
+        return { success: true, message: `Successfully sold ${quantity} shares of ${symbol}.` };
       },
     }),
     {
