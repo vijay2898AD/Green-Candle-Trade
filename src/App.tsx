@@ -26,7 +26,7 @@ function App() {
   // This ensures initialize() is only called AFTER state is loaded
   useEffect(() => {
     if (hasHydrated) {
-      initialize(1000000); // Start with ₹10,00,000
+      initialize(10000000); // Start with ₹10,00,000
     }
   }, [initialize, hasHydrated]);
 

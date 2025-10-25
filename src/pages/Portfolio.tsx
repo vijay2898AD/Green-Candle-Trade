@@ -9,7 +9,7 @@ interface Quote {
   symbol: string;
   price: number;
 }
-const INITIAL_CASH = 1000000; // Define initial cash as a constant
+const INITIAL_CASH = 10000000; // Define initial cash as a constant
 
 export const Portfolio = () => {
     const { holdings, sellStock, cash, transactions } = usePortfolioStore(); // Get transactions from store
