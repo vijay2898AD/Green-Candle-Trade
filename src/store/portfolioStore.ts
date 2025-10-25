@@ -21,7 +21,7 @@ type TradeResult = {
 }
 
 interface PortfolioState {
-  cash: number;
+  cash: number | null;
   holdings: Holding[];
   transactions: Transaction[];
   initialize: (initialCash: number) => void;
@@ -33,13 +33,13 @@ interface PortfolioState {
 export const usePortfolioStore = create<PortfolioState>()(
   persist(
     (set, get) => ({
-      cash: 0,
+      cash: null,
       holdings: [],
       transactions: [],
 
       // Action to initialize or reset the portfolio
       initialize: (initialCash) => {
-        if (get().cash === 0) { // Only initialize if not already set
+        if (get().cash === null) { // Only initialize if not already set
             set({ cash: initialCash, holdings: [], transactions: [] });
         }
       },
@@ -47,7 +47,7 @@ export const usePortfolioStore = create<PortfolioState>()(
       // Action to buy a stock
       buyStock: (symbol, quantity, price) => {
         const totalCost = quantity * price;
-        if (get().cash < totalCost) {
+        if ((get().cash || 0) < totalCost) {
           return { success: false, message: "Not enough cash to complete purchase." };
         }
 
@@ -67,7 +67,7 @@ export const usePortfolioStore = create<PortfolioState>()(
           }
 
           return {
-            cash: state.cash - totalCost,
+            cash: (state.cash || 0) - totalCost,
             holdings: newHoldings,
             transactions: [...state.transactions, { symbol, type: 'BUY', quantity, price, timestamp: new Date().toISOString() }],
           };
@@ -103,7 +103,7 @@ export const usePortfolioStore = create<PortfolioState>()(
           }
 
           return {
-            cash: state.cash + totalProceeds,
+            cash: (state.cash || 0) + totalProceeds,
             holdings: updatedHoldings,
             transactions: [...state.transactions, { symbol, type: 'SELL', quantity, price, timestamp: new Date().toISOString() }],
           };

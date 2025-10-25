@@ -96,7 +96,7 @@ export const Portfolio = () => {
                 {/* ... (keep all 4 summary divs as they are) */}
                  <div className="bg-gray-800 p-4 rounded-lg">
                     <h3 className="text-gray-400 text-sm">Total Value</h3>
-                    <p className="text-2xl font-bold">₹{(totalHoldingsValue + cash).toLocaleString('en-IN', {maximumFractionDigits: 2})}</p>
+                    <p className="text-2xl font-bold">₹{(totalHoldingsValue + (cash || 0)).toLocaleString('en-IN', {maximumFractionDigits: 2})}</p>
                 </div>
                 <div className="bg-gray-800 p-4 rounded-lg">
                     <h3 className="text-gray-400 text-sm">Holdings Value</h3>
@@ -104,7 +104,7 @@ export const Portfolio = () => {
                 </div>
                 <div className="bg-gray-800 p-4 rounded-lg">
                     <h3 className="text-gray-400 text-sm">Cash</h3>
-                    <p className="text-2xl font-bold text-green-400">₹{cash.toLocaleString('en-IN', {maximumFractionDigits: 2})}</p>
+                    <p className="text-2xl font-bold text-green-400">₹{(cash || 0).toLocaleString('en-IN', {maximumFractionDigits: 2})}</p>
                 </div>
                 <div className="bg-gray-800 p-4 rounded-lg">
                     <h3 className="text-gray-400 text-sm">Total P&L</h3>
