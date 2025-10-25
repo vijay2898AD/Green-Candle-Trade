@@ -14,7 +14,14 @@ interface Stock {
 }
 
 // --- FIX: The list of stocks to fetch ---
-const indian_stock_symbols = ["RELIANCE.NS", "TCS.NS", "HDFCBANK.NS", "INFY.NS", "ICICIBANK.NS", "HINDUNILVR.NS", "SBIN.NS", "WIPRO.NS"];
+const indian_stock_symbols = [
+  "RELIANCE.NS", "TCS.NS", "HDFCBANK.NS", "INFY.NS", "ICICIBANK.NS", "HINDUNILVR.NS", "SBIN.NS", "WIPRO.NS",
+  "BHARTIARTL.NS", "ITC.NS", "LTIM.NS", "BAJFINANCE.NS", "KOTAKBANK.NS", "HCLTECH.NS", "AXISBANK.NS",
+  "TATAMOTORS.NS", "MARUTI.NS", "SUNPHARMA.NS", "ASIANPAINT.NS", "LT.NS", "TATASTEEL.NS", "NTPC.NS",
+  "ULTRACEMCO.NS", "BAJAJFINSV.NS", "TITAN.NS", "NESTLEIND.NS", "M&M.NS", "JSWSTEEL.NS", "POWERGRID.NS",
+  "ADANIPORTS.NS", "CIPLA.NS", "ONGC.NS", "INDUSINDBK.NS", "DRREDDY.NS", "BPCL.NS", "GRASIM.NS",
+  "TATACONSUM.NS", "HDFCLIFE.NS", "SBILIFE.NS", "HEROMOTOCO.NS"
+];
 
 export const Market = () => {
   // --- FIX: All state variables are declared here ---
