@@ -97,7 +97,7 @@ export const Market = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stocks.map(stock => (
-          <div key={stock.symbol} className="bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col justify-between">
+          <div key={stock.symbol} className="bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col justify-between transition-all duration-200 ease-in-out hover:shadow-xl hover:-translate-y-1">
             <div>
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">{stock.symbol}</h2>
