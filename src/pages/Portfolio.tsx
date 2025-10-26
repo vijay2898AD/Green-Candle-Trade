@@ -89,24 +89,24 @@ export const Portfolio = () => {
 
     return (
         <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">My Portfolio</h1>
+            <h1 className="text-2xl font-bold mb-4 text-white transition-all duration-200 hover:scale-105 inline-block">My Portfolio</h1>
             
             {/* --- SUMMARY SECTION (No changes here) --- */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 {/* ... (keep all 4 summary divs as they are) */}
-                 <div className="bg-gray-800 p-4 rounded-lg">
+                 <div className="bg-gray-800 p-4 rounded-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
                     <h3 className="text-gray-400 text-sm">Total Value</h3>
                     <p className="text-2xl font-bold">₹{(totalHoldingsValue + (cash || 0)).toLocaleString('en-IN', {maximumFractionDigits: 2})}</p>
                 </div>
-                <div className="bg-gray-800 p-4 rounded-lg">
+                <div className="bg-gray-800 p-4 rounded-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
                     <h3 className="text-gray-400 text-sm">Holdings Value</h3>
                     <p className="text-2xl font-bold">₹{totalHoldingsValue.toLocaleString('en-IN', {maximumFractionDigits: 2})}</p>
                 </div>
-                <div className="bg-gray-800 p-4 rounded-lg">
+                <div className="bg-gray-800 p-4 rounded-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
                     <h3 className="text-gray-400 text-sm">Cash</h3>
                     <p className="text-2xl font-bold text-green-400">₹{(cash || 0).toLocaleString('en-IN', {maximumFractionDigits: 2})}</p>
                 </div>
-                <div className="bg-gray-800 p-4 rounded-lg">
+                <div className="bg-gray-800 p-4 rounded-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
                     <h3 className="text-gray-400 text-sm">Total P&L</h3>
                     <p className={`text-2xl font-bold ${totalPandL >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                         {totalPandL >= 0 ? '+' : ''}₹{totalPandL.toLocaleString('en-IN', {maximumFractionDigits: 2})}
@@ -142,7 +142,7 @@ export const Portfolio = () => {
                                 const pnlColor = pnl >= 0 ? 'text-green-400' : 'text-red-400';
 
                                 return (
-                                    <tr key={holding.symbol} className="border-t border-gray-700">
+                                    <tr key={holding.symbol} className="border-t border-gray-700 transition-colors duration-150 hover:bg-gray-700">
                                         <td className="p-3 font-bold">{holding.symbol}</td>
                                         <td className="p-3">{holding.quantity}</td>
                                         <td className="p-3">₹{holding.avgPrice.toLocaleString('en-IN', {maximumFractionDigits: 2})}</td>
