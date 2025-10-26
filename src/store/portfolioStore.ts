@@ -27,6 +27,8 @@ interface PortfolioState {
   initialize: (initialCash: number) => void;
   buyStock: (symbol: string, quantity: number, price: number) => TradeResult;
   sellStock: (symbol: string, quantity: number, price: number) => TradeResult;
+  addCash: (amount: number) => TradeResult;
+  withdrawCash: (amount: number) => TradeResult;
 }
 
 // Create the store
@@ -109,6 +111,30 @@ export const usePortfolioStore = create<PortfolioState>()(
           };
         });
         return { success: true, message: `Successfully sold ${quantity} shares of ${symbol}.` };
+      },
+
+      addCash: (amount) => {
+        if (amount <= 0) {
+          return { success: false, message: "Please enter a positive amount." };
+        }
+        set((state) => ({
+          cash: (state.cash || 0) + amount
+        }));
+        return { success: true, message: `Successfully added ₹${amount.toLocaleString('en-IN')} to your account.` };
+      },
+
+      // --- ADD THIS NEW FUNCTION ---
+      withdrawCash: (amount) => {
+        if (amount <= 0) {
+          return { success: false, message: "Please enter a positive amount." };
+        }
+        if ((get().cash || 0) < amount) {
+          return { success: false, message: "Withdrawal failed. Not enough cash." };
+        }
+        set((state) => ({
+          cash: (state.cash || 0) - amount
+        }));
+        return { success: true, message: `Successfully withdrew ₹${amount.toLocaleString('en-IN')}.` };
       },
     }),
     {
