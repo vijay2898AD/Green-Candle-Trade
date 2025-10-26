@@ -96,25 +96,56 @@ export const Market = () => {
     }
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {stocks.map(stock => (
-          <div key={stock.symbol} className="bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col justify-between transition-all duration-200 ease-in-out hover:shadow-xl hover:-translate-y-1">
-            <div>
-              <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold">{stock.symbol}</h2>
-                <p className={`text-lg font-semibold ${stock.changesPercentage >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                  ₹{stock.price.toFixed(2)}
-                </p>
-              </div>
-              <p className="text-sm text-gray-400 truncate">{stock.name}</p>
-            </div>
-            <button
-              onClick={() => handleOpenModal(stock)}
-              className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors"
+        {stocks.map(stock => {
+          // Calculate all the values we need
+          const isPositive = stock.changesPercentage >= 0;
+          const changeColor = isPositive ? 'text-green-600' : 'text-red-600';
+          const absoluteChange = (stock.price * stock.changesPercentage) / 100;
+          const symbolLetter = stock.symbol.charAt(0);
+
+          return (
+            <div 
+              key={stock.symbol} 
+              // New styling for the card
+              className="bg-white text-gray-900 p-4 rounded-2xl shadow-md border border-gray-200 flex flex-col transition-all duration-200 ease-in-out hover:shadow-xl hover:-translate-y-1"
             >
-              Buy
-            </button>
-          </div>
-        ))}
+              {/* This div holds all content *except* the button */}
+              <div className="flex-grow">
+                
+                {/* 1. Placeholder Logo */}
+                <div className="flex items-center mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-indigo-100 flex items-center justify-center mr-3 flex-shrink-0">
+                    <span className="text-xl font-bold text-indigo-700">{symbolLetter}</span>
+                  </div>
+                </div>
+
+                {/* 2. Company Name */}
+                <h2 className="text-base font-medium text-gray-700 truncate mb-1">{stock.name}</h2>
+                
+                {/* 3. Price */}
+                <p className="text-xl font-bold text-gray-900 mb-1">
+                  ₹{stock.price.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                </p>
+                
+                {/* 4. Change (Absolute and Percentage) */}
+                <div className={`text-sm font-medium ${changeColor}`}>
+                  <span>{isPositive ? '+' : ''}{absoluteChange.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>
+                  <span className="ml-1">({isPositive ? '+' : ''}{stock.changesPercentage.toFixed(2)}%)</span>
+                </div>
+              </div>
+
+              {/* 5. Buy Button (Kept for functionality) */}
+              <button
+                onClick={() => handleOpenModal(stock)}
+                className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-all duration-150 hover:shadow-md hover:-translate-y-px"
+              >
+                Buy
+              </button>
+            </div>
+          );
+        })}
+        {/* --- END OF CARD STYLING --- */}
+
       </div>
     );
   };
