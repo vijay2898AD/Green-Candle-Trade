@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
+import { Footer } from './components/Footer';
 import { Market } from './pages/Market';
 import { Portfolio } from './pages/Portfolio';
 import { usePortfolioStore } from './store/portfolioStore';
@@ -39,14 +40,15 @@ function App() {
   }
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen font-sans">
+    <div className="bg-gray-900 text-white min-h-screen font-sans flex flex-col">
       <Header />
-      <main>
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Market />} />
           <Route path="/portfolio" element={<Portfolio />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   )
 }
