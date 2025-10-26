@@ -12,13 +12,13 @@ export const Header = () => {
       <header className="bg-gray-800 text-white p-4 flex flex-col md:flex-row md:justify-between items-center gap-4">
         <Link 
           to="/" 
-          className="text-xl font-bold text-white hover:text-gray-300 transition-colors duration-150"
+          className="text-3xl font-bold text-green-400 transition-all duration-200 hover:scale-105 inline-block"
         >
           Green Candle Trade
         </Link>
         <nav className="flex gap-4">
-          <NavLink to="/" className={({isActive}) => isActive ? "text-blue-400" : "transition-all duration-200 ease-in-out hover:shadow-xl hover:-translate-y-1"}>Market</NavLink>
-          <NavLink to="/portfolio" className={({isActive}) => isActive ? "text-blue-400" : "text-white hover:text-blue-300 transition-colors duration-150"}>Portfolio</NavLink>
+          <NavLink to="/" className={({isActive}) => isActive ? "text-blue-400 scale-105" : "text-white hover:text-green-400 transition-all duration-200 hover:scale-105 inline-block"}>Market</NavLink>
+          <NavLink to="/portfolio" className={({isActive}) => isActive ? "text-blue-400 scale-105" : "text-white hover:text-green-400 transition-all duration-200 hover:scale-105 inline-block"}>Portfolio</NavLink>
         </nav>
         <button
           onClick={() => setIsCashModalOpen(true)}

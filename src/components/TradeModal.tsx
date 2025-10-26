@@ -41,7 +41,7 @@ export const TradeModal = ({ isOpen, onClose, stock, onConfirm }: TradeModalProp
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div>
-        <h2 className="text-2xl font-bold mb-2">Buy Stock</h2>
+        <h2 className="text-2xl font-bold mb-2 text-green-400">Buy Stock</h2>
         <div className="mb-4 border-b border-gray-700 pb-4">
           <p className="text-xl font-semibold">{stock.symbol}</p>
           <p className="text-gray-400">{stock.name}</p>
