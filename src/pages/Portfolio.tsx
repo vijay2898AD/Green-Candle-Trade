@@ -1,15 +1,13 @@
-// src/pages/Portfolio.tsx
-
 import { useState, useEffect } from 'react';
 import { usePortfolioStore } from '../store/portfolioStore';
 import { getAllStockQuotes, getStockQuote } from '../services/fmpApi';
-import { PortfolioChart } from '../components/PortfolioChart'; // 1. IMPORT THE CHART
+import { PortfolioChart } from '../components/PortfolioChart'; 
 
 interface Quote {
   symbol: string;
   price: number;
 }
-const INITIAL_CASH = 10000000; // Define initial cash as a constant
+const INITIAL_CASH = 10000000; 
 
 export const Portfolio = () => {
     const { holdings, sellStock, cash, transactions } = usePortfolioStore(); // Get transactions from store
@@ -17,7 +15,6 @@ export const Portfolio = () => {
     const [loading, setLoading] = useState(true);
     const [sellingSymbol, setSellingSymbol] = useState<string | null>(null);
 
-    // ... (keep the useEffect and handleSell functions exactly as they are)
     useEffect(() => {
         const fetchAllQuotes = async () => {
             if (holdings.length === 0) { setLoading(false); return; }
@@ -25,10 +22,8 @@ export const Portfolio = () => {
                 setLoading(true);
                 const holdingSymbols = holdings.map(h => h.symbol);
                 
-                // 1. Get all quotes from our local JSON
                 const allQuotes = await getAllStockQuotes();
                 
-                // 2. Filter for just the ones we own
                 const quotesMap = allQuotes
                   .filter(q => holdingSymbols.includes(q.symbol))
                   .reduce((acc, quote) => {
@@ -55,7 +50,6 @@ export const Portfolio = () => {
               throw new Error("Could not get price to sell.");
             }
             
-            // Call the store and get the result
             const result = sellStock(symbol, quantity, quote.price);
             alert(result.message);
         } catch (error) { alert("Could not complete the sale. Please try again."); }
@@ -63,19 +57,19 @@ export const Portfolio = () => {
     };
 
 
-    const totalHoldingsValue = holdings.reduce((total, holding) => { /* ... (keep this calculation as is) */
+    const totalHoldingsValue = holdings.reduce((total, holding) => { 
         const currentPrice = quotes[holding.symbol]?.price || 0;
         return total + (currentPrice * holding.quantity);
     }, 0);
 
-    const totalPandL = holdings.reduce((total, holding) => { /* ... (keep this calculation as is) */
+    const totalPandL = holdings.reduce((total, holding) => { 
         const currentPrice = quotes[holding.symbol]?.price || 0;
         if (currentPrice === 0) return total;
         const pnl = (currentPrice - holding.avgPrice) * holding.quantity;
         return total + pnl;
     }, 0);
 
-    // ... (keep the loading and empty portfolio returns as they are)
+
     if (loading) { return <div className="p-4 text-center">Loading portfolio data...</div>; }
     if (holdings.length === 0 && transactions.length === 0) {
         return (
@@ -91,9 +85,7 @@ export const Portfolio = () => {
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4 text-white transition-all duration-200 hover:scale-105 inline-block">My Portfolio</h1>
             
-            {/* --- SUMMARY SECTION (No changes here) --- */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                {/* ... (keep all 4 summary divs as they are) */}
                  <div className="bg-gray-800 p-4 rounded-lg transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
                     <h3 className="text-gray-400 text-sm">Total Value</h3>
                     <p className="text-2xl font-bold">₹{(totalHoldingsValue + (cash || 0)).toLocaleString('en-IN', {maximumFractionDigits: 2})}</p>
@@ -114,15 +106,14 @@ export const Portfolio = () => {
                 </div>
             </div>
 
-            {/* 2. RENDER THE CHART */}
+        
             <PortfolioChart transactions={transactions} initialCash={INITIAL_CASH} />
 
-            {/* --- HOLDINGS TABLE (No changes here) --- */}
+
             <div className="bg-gray-800 rounded-lg overflow-x-auto mt-6">
                  {holdings.length > 0 && (
                     <table className="min-w-full text-left">
                         <thead className="text-gray-400 border-b border-gray-700">
-                            {/* ... (keep the table head as is) */}
                              <tr>
                                 <th className="p-3">Symbol</th>
                                 <th className="p-3">Qty</th>
@@ -135,7 +126,6 @@ export const Portfolio = () => {
                         </thead>
                         <tbody>
                             {holdings.map((holding) => {
-                                // ... (keep the table row mapping as is)
                                 const currentPrice = quotes[holding.symbol]?.price || 0;
                                 const marketValue = currentPrice * holding.quantity;
                                 const pnl = (currentPrice - holding.avgPrice) * holding.quantity;

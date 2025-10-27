@@ -10,24 +10,23 @@ function App() {
   const initialize = usePortfolioStore((state) => state.initialize);
 
   const [hasHydrated, setHasHydrated] = useState(false);
-  // Initialize the user with starting cash when the app loads
+  
   useEffect(() => {
-    // This tells Zustand to set hasHydrated=true *after* it finishes loading
+    
     usePortfolioStore.persist.onFinishHydration(() => {
       setHasHydrated(true);
     });
 
-    // Also set it true in case it's already done
+
     if (usePortfolioStore.persist.hasHydrated()) {
       setHasHydrated(true);
     }
   }, []);
 
-  // --- CHANGED: This useEffect now depends on hasHydrated ---
-  // This ensures initialize() is only called AFTER state is loaded
+  
   useEffect(() => {
     if (hasHydrated) {
-      initialize(10000000); // Start with ₹1,00,00,000
+      initialize(10000000); 
     }
   }, [initialize, hasHydrated]);
 

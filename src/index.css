@@ -9,6 +9,5 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  /* These are good defaults from your App.tsx */
   @apply bg-gray-900 text-white min-h-screen;
 }

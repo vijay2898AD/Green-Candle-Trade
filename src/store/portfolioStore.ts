@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-// Define the shape of our data
 export interface Holding {
   symbol: string;
   quantity: number;
@@ -31,7 +30,7 @@ interface PortfolioState {
   withdrawCash: (amount: number) => TradeResult;
 }
 
-// Create the store
+
 export const usePortfolioStore = create<PortfolioState>()(
   persist(
     (set, get) => ({
@@ -39,14 +38,14 @@ export const usePortfolioStore = create<PortfolioState>()(
       holdings: [],
       transactions: [],
 
-      // Action to initialize or reset the portfolio
+      
       initialize: (initialCash) => {
-        if (get().cash === null) { // Only initialize if not already set
+        if (get().cash === null) { 
             set({ cash: initialCash, holdings: [], transactions: [] });
         }
       },
 
-      // Action to buy a stock
+  
       buyStock: (symbol, quantity, price) => {
         const totalCost = quantity * price;
         if ((get().cash || 0) < totalCost) {
@@ -58,13 +57,11 @@ export const usePortfolioStore = create<PortfolioState>()(
           const holdingIndex = newHoldings.findIndex(h => h.symbol === symbol);
 
           if (holdingIndex > -1) {
-            // Stock already in portfolio, update it
             const existingHolding = newHoldings[holdingIndex];
             const newTotalQuantity = existingHolding.quantity + quantity;
             const newAvgPrice = ((existingHolding.avgPrice * existingHolding.quantity) + totalCost) / newTotalQuantity;
             newHoldings[holdingIndex] = { ...existingHolding, quantity: newTotalQuantity, avgPrice: newAvgPrice };
           } else {
-            // New stock, add it
             newHoldings.push({ symbol, quantity, avgPrice: price });
           }
 
@@ -77,11 +74,11 @@ export const usePortfolioStore = create<PortfolioState>()(
         return { success: true, message: `Successfully purchased ${quantity} shares of ${symbol}.`};
       },
 
-      // Action to sell a stock (we'll implement this logic later)
+      
       sellStock: (symbol, quantity, price) => {
         const existingHolding = get().holdings.find(h => h.symbol === symbol);
 
-        // Validation: Check if user owns the stock and has enough quantity
+      
         if (!existingHolding) {
           return { success: false, message: "Error: You do not own this stock." };
         }
@@ -97,10 +94,8 @@ export const usePortfolioStore = create<PortfolioState>()(
           const newQuantity = existingHolding.quantity - quantity;
 
           if (newQuantity === 0) {
-            // If selling all shares, remove the holding from the portfolio
             updatedHoldings = updatedHoldings.filter(h => h.symbol !== symbol);
           } else {
-            // Otherwise, just update the quantity
             updatedHoldings[holdingIndex] = { ...existingHolding, quantity: newQuantity };
           }
 
@@ -123,7 +118,7 @@ export const usePortfolioStore = create<PortfolioState>()(
         return { success: true, message: `Successfully added ₹${amount.toLocaleString('en-IN')} to your account.` };
       },
 
-      // --- ADD THIS NEW FUNCTION ---
+
       withdrawCash: (amount) => {
         if (amount <= 0) {
           return { success: false, message: "Please enter a positive amount." };
@@ -138,7 +133,7 @@ export const usePortfolioStore = create<PortfolioState>()(
       },
     }),
     {
-      name: 'tradesim-nse-storage', // name of the item in the storage (must be unique)
+      name: 'tradesim-nse-storage', 
     }
   )
 );
