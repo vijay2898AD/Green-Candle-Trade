@@ -144,7 +144,6 @@ export const Market = () => {
             </div>
           );
         })}
-        {/* --- END OF CARD STYLING --- */}
 
       </div>
     );

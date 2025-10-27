@@ -1,5 +1,3 @@
-// src/components/PortfolioChart.tsx
-
 import { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts';
 import type { Transaction } from '../store/portfolioStore'; 
@@ -9,23 +7,19 @@ interface PortfolioChartProps {
   initialCash: number;
 }
 
-// --- 1. NEW: A smarter formatter for Indian currency ---
 const formatIndianCurrency = (value: number) => {
-  if (value >= 10000000) { // 1 Crore
-    // Show one decimal place for Crores (e.g., 1.5Cr), but remove .0
+  if (value >= 10000000) { 
     const formatted = (value / 10000000).toFixed(1).replace('.0', '');
     return `₹${formatted}Cr`;
   }
-  if (value >= 100000) { // 1 Lakh
-    // Show whole numbers for Lakhs (e.g., 75L)
+  if (value >= 100000) { 
     const formatted = (value / 100000).toFixed(0);
     return `₹${formatted}L`;
   }
-  if (value >= 1000) { // 1 Thousand
+  if (value >= 1000) { 
     const formatted = (value / 1000).toFixed(0);
     return `₹${formatted}k`;
   }
-  // For values less than 1000
   return `₹${value}`;
 };
 
@@ -33,7 +27,6 @@ const formatIndianCurrency = (value: number) => {
 export const PortfolioChart = ({ transactions, initialCash }: PortfolioChartProps) => {
 
   const chartData = useMemo(() => {
-    // ... (This useMemo hook remains exactly the same)
     if (transactions.length === 0) {
        return [{ name: 'Start', cash: initialCash }];
      }
@@ -75,7 +68,6 @@ export const PortfolioChart = ({ transactions, initialCash }: PortfolioChartProp
             
             <YAxis 
               stroke="#A0AEC0" 
-              // --- 2. UPDATED: Use the new formatter function ---
               tickFormatter={formatIndianCurrency} 
               domain={[0, 'auto']}
               allowDataOverflow={true}

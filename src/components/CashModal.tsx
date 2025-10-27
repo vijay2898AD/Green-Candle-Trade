@@ -1,5 +1,3 @@
-// src/components/CashModal.tsx
-
 import { useState, useEffect } from 'react';
 import { Modal } from './Modal';
 import { usePortfolioStore } from '../store/portfolioStore';
@@ -34,10 +32,10 @@ export const CashModal = ({ isOpen, onClose }: CashModalProps) => {
       result = withdrawCash(numAmount);
     }
 
-    alert(result.message); // Show success/error
+    alert(result.message); 
     
     if (result.success) {
-      onClose(); // Close modal on success
+      onClose(); 
     }
   };
 

@@ -1,6 +1,6 @@
 import { usePortfolioStore } from '../store/portfolioStore';
 import { NavLink , Link} from 'react-router-dom';
-import { useState } from 'react'; // <-- 1. Import useState
+import { useState } from 'react'; 
 import { CashModal } from './CashModal';
 
 export const Header = () => {
@@ -28,7 +28,6 @@ export const Header = () => {
         </button>
       </header>
       
-      {/* --- 6. ADD THE MODAL COMPONENT --- */}
       <CashModal 
         isOpen={isCashModalOpen} 
         onClose={() => setIsCashModalOpen(false)} 

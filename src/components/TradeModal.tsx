@@ -17,7 +17,6 @@ interface TradeModalProps {
 export const TradeModal = ({ isOpen, onClose, stock, onConfirm }: TradeModalProps) => {
   const [quantity, setQuantity] = useState('');
 
-  // Reset quantity when modal opens for a new stock
   useEffect(() => {
     if (isOpen) {
       setQuantity('');
@@ -32,7 +31,7 @@ export const TradeModal = ({ isOpen, onClose, stock, onConfirm }: TradeModalProp
     const numQuantity = parseInt(quantity, 10);
     if (!isNaN(numQuantity) && numQuantity > 0) {
       onConfirm(stock.symbol, numQuantity, stock.price);
-      onClose(); // Close modal after confirming
+      onClose(); 
     } else {
       alert('Please enter a valid, positive quantity.');
     }
