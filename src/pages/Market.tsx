@@ -98,7 +98,7 @@ export const Market = () => {
           return (
             <div 
               key={stock.symbol} 
-              className="bg-white text-gray-900 p-4 rounded-2xl shadow-md border border-gray-200 flex flex-col transition-all duration-200 ease-in-out hover:shadow-xl hover:-translate-y-1"
+              className="bg-white bg-opacity-90 text-gray-900 p-4 rounded-2xl shadow-md border border-gray-200 flex flex-col transition-all duration-200 ease-in-out hover:shadow-xl hover:-translate-y-1"
             >
               <div className="flex-grow">
                 
