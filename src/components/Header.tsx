@@ -9,7 +9,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="bg-gray-800 text-white p-4 flex flex-col md:flex-row md:justify-between items-center gap-4">
+      <header className="text-white p-4 flex flex-col md:flex-row md:justify-between items-center gap-4 sticky top-0 z-50 bg-gray-900/70 backdrop-blur-lg border-b border-gray-700/80 shadow-md">
         <Link 
           to="/" 
           className="text-3xl font-bold text-green-400 transition-all duration-200 hover:scale-105 inline-block"

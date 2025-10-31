@@ -137,7 +137,7 @@ export const Market = () => {
   return (
     <>
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4 text-white transition-all duration-200 hover:scale-105 inline-block ">Market (NSE Stocks)</h1>
+        <h1 className="text-xl font-bold mb-4 text-white transition-all duration-200 hover:scale-105 inline-block ">Market (NSE Stocks)</h1>
         {renderContent()}
       </div>
       
