@@ -73,8 +73,8 @@ export const Portfolio = () => {
     if (loading) { return <div className="p-4 text-center">Loading portfolio data...</div>; }
     if (holdings.length === 0 && transactions.length === 0) {
         return (
-            <div className="p-4">
-                <h1 className="text-2xl font-bold">Your Portfolio is empty.</h1>
+            <div className="flex h-screen flex-col items-center justify-center p-4">
+                <h1 className="text-4xl font-bold">Your Portfolio is empty.</h1>
                 <p className="text-gray-400">Visit the Market page to begin trading!</p>
             </div>
         );
