@@ -10,7 +10,7 @@ interface Quote {
 const INITIAL_CASH = 10000000; 
 
 export const Portfolio = () => {
-    const { holdings, sellStock, cash, transactions } = usePortfolioStore(); // Get transactions from store
+    const { holdings, sellStock, cash, transactions } = usePortfolioStore(); 
     const [quotes, setQuotes] = useState<Record<string, Quote>>({});
     const [loading, setLoading] = useState(true);
     const [sellingSymbol, setSellingSymbol] = useState<string | null>(null);
