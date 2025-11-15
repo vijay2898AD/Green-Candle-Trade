@@ -11,7 +11,7 @@ export const CashModal = ({ isOpen, onClose }: CashModalProps) => {
   const [amount, setAmount] = useState('');
   const { addCash, withdrawCash, cash } = usePortfolioStore();
 
-  // Reset amount when modal opens
+  // Reset amount when modal opens.
   useEffect(() => {
     if (isOpen) {
       setAmount('');
